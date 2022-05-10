@@ -68,7 +68,7 @@ class StoreItem{
         priceCountContainer.textContent = this.price;
         
         
-
+        
         //puts the containers in the right places
         this.container.append(container);
         container.append(backgroundImageContainer);
