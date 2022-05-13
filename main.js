@@ -39,11 +39,12 @@ let buyButtonCont27 = document.getElementById('buyButtonCont27');
 
 
 class StoreItem{
-    constructor(backgroundImageParam, priceParam, containerParam, buybuttonContParam){
+    constructor(backgroundImageParam, priceParam, containerParam, buybuttonContParam, typeParam){
         this.backgroundImage = backgroundImageParam;
         this.price = priceParam;
         this.container = containerParam;
         this.buyButtonCont = buybuttonContParam;
+        this.type = typeParam;
     }
     Render(){
         //creates all needed containers
@@ -86,29 +87,56 @@ class StoreItem{
         let canAffordItem = false;
         let itemAvailable = true;
         let itemBought = false;
+        let num = 0;
+        let t = false;
+        
         //When image container is clicked, it check if you can afford the item
         imgContainer.addEventListener('click', ()=>{
             
             if(coins >= this.price){
                 canAffordItem = true;    
             }
+
+            
+
                 if(canAffordItem && itemAvailable){
                     console.log("item bought");
-                    itemAvailable = false;
                     itemBought = true;
                     coins = coins - this.price;
                     UpdateCoins();
+                    itemAvailable = false;
                     this.ChangeObject(useButton);
-                }else if(canAffordItem && !itemAvailable){
+                }else if(canAffordItem && itemAvailable){
                     console.log("You have already bought this item");
                 }else{
                     console.log('broke');
                 }
 
-            if(itemBought){
+            if(itemBought && !t){
                 this.buyButtonCont.append(useButton);
+                t = true;
             }
 
+            if(this.type === "Dcoins" && num < 60 && !itemAvailable){
+                useButton.addEventListener('click', ()=>{
+                num = 0;
+                 useButton.remove();
+                 DoubleCoinsAdder(1);
+                 let timer = setInterval(function(){
+                     num++;
+                         if(num >= 60){
+                            clearInterval(timer);
+                            itemAvailable = true;
+                            itemBought = false;
+                            t = false;
+                            DoubleCoinsAdder(-1);
+                            
+                           
+                         }
+                 }, 1000);
+                });
+             }
+                
                 
          });
     }
@@ -116,15 +144,27 @@ class StoreItem{
     ChangeObject(useButton){
         useButton.classList.add('buyButton');
         useButton.textContent = "Use";
-        useButton.addEventListener('click', ()=>{
-            document.getElementById('object').style.backgroundImage = 'URL('+this.backgroundImage+')';
-            document.querySelectorAll('.buyButton').forEach(btn =>{
-                btn.textContent = "Use";
+
+        if(this.type !== "cosm"){
+            useButton.addEventListener('click', ()=>{
             });
-            changeText(event);
-        });
+        }
+
+        if(this.type === "cosm"){
+            useButton.addEventListener('click', ()=>{
+                document.getElementById('object').style.backgroundImage = 'URL('+this.backgroundImage+')';
+                document.querySelectorAll('.buyButton').forEach(btn =>{
+                    btn.textContent = "Use";
+                });
+                changeText(event);
+                
+            });
+        }
+
                 
     }
+
+    
 
 };
 
@@ -133,7 +173,7 @@ class StoreItem{
 
 document.querySelector('.score').textContent = coins;
 document.getElementById('object').addEventListener('click', ()=>{
-    coins++;
+    AddCoins(1);
     UpdateCoins();
 });
 
@@ -160,24 +200,28 @@ function changeText(event) {
     event.target.textContent = "Using"
   }
 
+  function AddCoins(inc){
+    coins = coins + inc;
+  }
+
+  function DoubleCoinsAdder(inc){
+      document.getElementById('object').addEventListener('click', ()=>{
+        coins = coins + inc;
+      });
+  }
+
+ 
+
 document.querySelector('.coinCount').textContent = coins;
-    let item1 = new StoreItem("Assets/coin.png", 10, productLine1, buyButtonCont1);
-    let item3 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont2);
-    let item4 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont3);
-    let item5 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont4);
-    let item6 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont5);
-    let item7 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont6);
+    let item1 = new StoreItem("Assets/coin.png", 10, productLine1, buyButtonCont1, "Dcoins");
+    let item3 = new StoreItem("Assets/coin.png", 20, productLine1, buyButtonCont2, "cosm");
+    let item4 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont3, "cosm");
+    let item5 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont4, "cosm");
+    let item6 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont5, "cosm");
+    let item7 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont6, "cosm");
     item1.Render();
     item3.Render();
     item4.Render();
     item5.Render();
     item6.Render();
     item7.Render();
-
-
-    
-
-    
-
-    
-
