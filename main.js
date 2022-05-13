@@ -89,7 +89,33 @@ class StoreItem{
         let itemBought = false;
         let num = 0;
         let t = false;
+        let dsec = 10;
+        let sec = 30;
+        let displayText = "";
+
+        function DoubleCoinsAdder(inc){
+            document.getElementById('object').addEventListener('click', ()=>{
+              coins = coins + inc;
+            });
+        }
+
         
+
+        
+
+        function TimerDiplayText(){
+            let dsecText = dsec.toString();
+            let secText = sec.toString();
+            displayText = secText +":"+dsecText;
+            document.getElementById('TimerDiplayContainer').textContent = displayText;
+
+            if(sec === 0 && dsec === 0){
+                document.getElementById('TimerDiplayContainer').textContent = '';
+                sec = 30;
+                dsec = 10;
+            }
+            
+        }
         //When image container is clicked, it check if you can afford the item
         imgContainer.addEventListener('click', ()=>{
             
@@ -117,24 +143,43 @@ class StoreItem{
                 t = true;
             }
 
-            if(this.type === "Dcoins" && num < 60 && !itemAvailable){
+            if(this.type === "Dcoins" && num < 30 && !itemAvailable){
                 useButton.addEventListener('click', ()=>{
                 num = 0;
+                sec = 30;
+                dsec = 10;
+                let TimerDiplay = setInterval(function(){
+                    dsec--;
+                        if(dsec === 0){
+                            dsec = 10;
+                            sec--;
+                        }
+        
+                        if(sec === 0 && dsec === 1){
+                            dsec = 0;
+                            clearInterval(TimerDiplay);
+                        }
+                        TimerDiplayText();
+                        
+                }, 100)
+
                  useButton.remove();
                  DoubleCoinsAdder(1);
                  let timer = setInterval(function(){
                      num++;
-                         if(num >= 60){
+                     console.log(num);
+                         if(num >= 30){
                             clearInterval(timer);
                             itemAvailable = true;
                             itemBought = false;
                             t = false;
                             DoubleCoinsAdder(-1);
-                            
-                           
                          }
                  }, 1000);
+
                 });
+
+               
              }
                 
                 
@@ -142,6 +187,11 @@ class StoreItem{
     }
 
     ChangeObject(useButton){
+
+        function changeText(event) {
+            event.target.textContent = "Using"
+          }
+
         useButton.classList.add('buyButton');
         useButton.textContent = "Use";
 
@@ -196,24 +246,19 @@ function UpdateCoins(){
     document.querySelector('.coinCount').textContent = coins;
 }
 
-function changeText(event) {
-    event.target.textContent = "Using"
-  }
 
   function AddCoins(inc){
     coins = coins + inc;
   }
 
-  function DoubleCoinsAdder(inc){
-      document.getElementById('object').addEventListener('click', ()=>{
-        coins = coins + inc;
-      });
-  }
+
+
+  
 
  
 
 document.querySelector('.coinCount').textContent = coins;
-    let item1 = new StoreItem("Assets/coin.png", 10, productLine1, buyButtonCont1, "Dcoins");
+    let item1 = new StoreItem("Assets/coinX2.png", 10, productLine1, buyButtonCont1, "Dcoins");
     let item3 = new StoreItem("Assets/coin.png", 20, productLine1, buyButtonCont2, "cosm");
     let item4 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont3, "cosm");
     let item5 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont4, "cosm");
