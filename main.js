@@ -98,11 +98,6 @@ class StoreItem{
               coins = coins + inc;
             });
         }
-
-        
-
-        
-
         function TimerDiplayText(){
             let dsecText = dsec.toString();
             let secText = sec.toString();
@@ -258,15 +253,21 @@ function UpdateCoins(){
  
 
 document.querySelector('.coinCount').textContent = coins;
-    let item1 = new StoreItem("Assets/coinX2.png", 10, productLine1, buyButtonCont1, "Dcoins");
-    let item3 = new StoreItem("Assets/coin.png", 20, productLine1, buyButtonCont2, "cosm");
-    let item4 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont3, "cosm");
-    let item5 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont4, "cosm");
-    let item6 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont5, "cosm");
-    let item7 = new StoreItem("Assets/cookie.png", 20, productLine1, buyButtonCont6, "cosm");
+    let item1 = new StoreItem("Assets/cookie.png", 0, productLine1, buyButtonCont1, "cosm");
+    let item2 = new StoreItem("Assets/drums.png", 30, productLine1, buyButtonCont2, "cosm");
+    let item3 = new StoreItem("Assets/coin.png", 20, productLine1, buyButtonCont3, "cosm");
+    let item4 = new StoreItem("Assets/coinX2.png", 20, productLine1, buyButtonCont4, "Dcoins");
+    let item5 = new StoreItem("Assets/basketball.png", 20, productLine1, buyButtonCont5, "cosm");
+    let item6 = new StoreItem("Assets/earth.png", 20, productLine1, buyButtonCont6, "cosm");
+    let item7 = new StoreItem("Assets/helicopter.png", 20, productLine1, buyButtonCont7, "cosm");
+    let item8 = new StoreItem("Assets/duck.png", 40, productLine1, buyButtonCont8, "cosm");
+    let item9 = new StoreItem("Assets/tree.png", 30, productLine1, buyButtonCont9, "cosm");
     item1.Render();
+    item2.Render();
     item3.Render();
     item4.Render();
     item5.Render();
     item6.Render();
     item7.Render();
+    item8.Render();
+    item9.Render();
