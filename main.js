@@ -76,6 +76,8 @@ class StoreItem{
         container.append(priceContainer);
         priceContainer.append(coinContainer);
         priceContainer.append(priceCountContainer);
+        backgroundImageContainer.append(document.getElementById('file'));
+        
         
 
             this.Purchases(backgroundImageContainer, useButton);
@@ -92,7 +94,10 @@ class StoreItem{
         let dsec = 10;
         let sec = 30;
         let displayText = "";
+        let fileButton = document.getElementById('file');
 
+        fileButton.disabled = true;
+        fileButton.style.display = 'none';
         function DoubleCoinsAdder(inc){
             document.getElementById('object').addEventListener('click', ()=>{
               coins = coins + inc;
@@ -127,11 +132,11 @@ class StoreItem{
                     UpdateCoins();
                     itemAvailable = false;
                     this.ChangeObject(useButton);
-                }else if(canAffordItem && itemAvailable){
-                    console.log("You have already bought this item");
+                    this.CustomItem(fileButton, imgContainer, useButton);
                 }else{
-                    console.log('broke');
+                    return;
                 }
+                
 
             if(itemBought && !t){
                 this.buyButtonCont.append(useButton);
@@ -162,7 +167,6 @@ class StoreItem{
                  DoubleCoinsAdder(1);
                  let timer = setInterval(function(){
                      num++;
-                     console.log(num);
                          if(num >= 30){
                             clearInterval(timer);
                             itemAvailable = true;
@@ -183,14 +187,12 @@ class StoreItem{
 
     ChangeObject(useButton){
 
-        function changeText(event) {
-            event.target.textContent = "Using"
-          }
+        
 
         useButton.classList.add('buyButton');
         useButton.textContent = "Use";
 
-        if(this.type !== "cosm"){
+        if(this.type === "Dcoins"){
             useButton.addEventListener('click', ()=>{
             });
         }
@@ -206,7 +208,40 @@ class StoreItem{
             });
         }
 
+        
+
                 
+    }
+
+    CustomItem(fileButton, imgContainer, useButton){
+        if(this.type === "custom"){
+            fileButton.disabled = false;
+            fileButton.style.display = "flex";
+            imgContainer.style.backgroundImage = "none";
+            console.log(111);
+            let uploadedImg = "";
+            fileButton.addEventListener('change', function(){
+                let reader = new FileReader();
+                reader.addEventListener('load', () =>{
+                    uploadedImg = reader.result;
+                    imgContainer.style.backgroundImage = 'url('+uploadedImg+')'
+                    fileButton.style.display = 'none';
+                });
+                reader.readAsDataURL(this.files[0]);
+            })
+
+            if(this.type === "custom"){
+                useButton.addEventListener('click', ()=>{
+                    document.getElementById('object').style.backgroundImage = 'URL('+uploadedImg+')';
+                    document.querySelectorAll('.buyButton').forEach(btn =>{
+                        btn.textContent = "Use";
+                    });
+                    changeText(event);
+                    
+                });
+            }
+        }
+
     }
 
     
@@ -246,6 +281,10 @@ function UpdateCoins(){
     coins = coins + inc;
   }
 
+  function changeText(event) {
+    event.target.textContent = "Using"
+  }
+
 
 
   
@@ -262,6 +301,8 @@ document.querySelector('.coinCount').textContent = coins;
     let item7 = new StoreItem("Assets/helicopter.png", 20, productLine1, buyButtonCont7, "cosm");
     let item8 = new StoreItem("Assets/duck.png", 40, productLine1, buyButtonCont8, "cosm");
     let item9 = new StoreItem("Assets/tree.png", 30, productLine1, buyButtonCont9, "cosm");
+
+    let customItem = new StoreItem("Assets/tree.png", 100, productLine3, buyButtonCont19, "custom");
     item1.Render();
     item2.Render();
     item3.Render();
@@ -271,3 +312,4 @@ document.querySelector('.coinCount').textContent = coins;
     item7.Render();
     item8.Render();
     item9.Render();
+    customItem.Render();

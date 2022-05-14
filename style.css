@@ -130,7 +130,7 @@ width: 1000px;
       -moz-user-select: none; /* Old versions of Firefox */
       -ms-user-select: none; /* Internet Explorer/Edge */
       user-select: none; /* Non-prefixed version, currently*/
-      font-size: 17px;
+      font-size: 15px;
   }
 
   .backgroundImageContainer{
@@ -139,6 +139,15 @@ width: 1000px;
       background-size: cover;
       background-position: center;
       cursor: pointer;
+      display: grid;
+      place-items: center;
+      
+      
+  }
+
+  #file{
+      width: 90px;
+      height: 50px;
   }
 
   .coinContainer{
