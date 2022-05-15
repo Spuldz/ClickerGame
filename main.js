@@ -92,7 +92,8 @@ class StoreItem{
         let num = 0;
         let t = false;
         let dsec = 10;
-        let sec = 30;
+        let time = 30;
+        let sec = time;
         let displayText = "";
         let fileButton = document.getElementById('file');
 
@@ -111,7 +112,7 @@ class StoreItem{
 
             if(sec === 0 && dsec === 0){
                 document.getElementById('TimerDiplayContainer').textContent = '';
-                sec = 30;
+                sec = time;
                 dsec = 10;
             }
             
@@ -124,7 +125,7 @@ class StoreItem{
             }
 
             
-
+            //handles the purchases
                 if(canAffordItem && itemAvailable){
                     console.log("item bought");
                     itemBought = true;
@@ -137,17 +138,20 @@ class StoreItem{
                     return;
                 }
                 
-
+            //a little script for the doubleCoins ability.
+            //makes it not buyable once it already is bought and is being used
             if(itemBought && !t){
                 this.buyButtonCont.append(useButton);
                 t = true;
             }
 
-            if(this.type === "Dcoins" && num < 30 && !itemAvailable){
+            //checks if you can run the timer
+            if(this.type === "Dcoins" && num < time && !itemAvailable){
                 useButton.addEventListener('click', ()=>{
                 num = 0;
-                sec = 30;
+                sec = time;
                 dsec = 10;
+                //function that creates a countdown timer
                 let TimerDiplay = setInterval(function(){
                     dsec--;
                         if(dsec === 0){
@@ -167,7 +171,7 @@ class StoreItem{
                  DoubleCoinsAdder(1);
                  let timer = setInterval(function(){
                      num++;
-                         if(num >= 30){
+                         if(num >= time){
                             clearInterval(timer);
                             itemAvailable = true;
                             itemBought = false;
@@ -184,11 +188,8 @@ class StoreItem{
                 
          });
     }
-
+    //a method that changes or doesnt change the background image of the clickable object
     ChangeObject(useButton){
-
-        
-
         useButton.classList.add('buyButton');
         useButton.textContent = "Use";
 
@@ -213,12 +214,12 @@ class StoreItem{
                 
     }
 
+    //a method that created a custom image feature
     CustomItem(fileButton, imgContainer, useButton){
         if(this.type === "custom"){
             fileButton.disabled = false;
             fileButton.style.display = "flex";
             imgContainer.style.backgroundImage = "none";
-            console.log(111);
             let uploadedImg = "";
             fileButton.addEventListener('change', function(){
                 let reader = new FileReader();
@@ -250,48 +251,43 @@ class StoreItem{
 
 
 
-
+//makes it so if you click the object, then the coins increse by 1
 document.querySelector('.score').textContent = coins;
 document.getElementById('object').addEventListener('click', ()=>{
     AddCoins(1);
     UpdateCoins();
 });
-
+//when the store option is clicked then it opens the store popup
 document.getElementById('StoreText').addEventListener('click', ()=>{
     StoreOpen = true;
         if(StoreOpen){
             StorePopup.style.display = 'block';
         }
 });
-
+//when close button clicked, then the store popup window is closed
 document.getElementById('close').addEventListener('click', ()=>{
     StoreOpen = false;
     StorePopup.style.display = 'none';
 });
 
 
-
+//Updated the coins count
 function UpdateCoins(){
     document.querySelector('.score').textContent = coins;
     document.querySelector('.coinCount').textContent = coins;
 }
 
-
+//Adds coins when object is clicked
   function AddCoins(inc){
     coins = coins + inc;
   }
 
+  //Changed the use buttons text to "Using" when that object is being used
   function changeText(event) {
     event.target.textContent = "Using"
   }
 
-
-
-  
-
- 
-
-document.querySelector('.coinCount').textContent = coins;
+    //Making the store items and giving them the needed information
     let item1 = new StoreItem("Assets/cookie.png", 0, productLine1, buyButtonCont1, "cosm");
     let item2 = new StoreItem("Assets/drums.png", 30, productLine1, buyButtonCont2, "cosm");
     let item3 = new StoreItem("Assets/coin.png", 20, productLine1, buyButtonCont3, "cosm");
@@ -301,8 +297,8 @@ document.querySelector('.coinCount').textContent = coins;
     let item7 = new StoreItem("Assets/helicopter.png", 20, productLine1, buyButtonCont7, "cosm");
     let item8 = new StoreItem("Assets/duck.png", 40, productLine1, buyButtonCont8, "cosm");
     let item9 = new StoreItem("Assets/tree.png", 30, productLine1, buyButtonCont9, "cosm");
-
-    let customItem = new StoreItem("Assets/tree.png", 100, productLine3, buyButtonCont19, "custom");
+    let customItem = new StoreItem("Assets/custom.png", 100, productLine3, buyButtonCont19, "custom");
+    //Rendering the items onto the screen
     item1.Render();
     item2.Render();
     item3.Render();

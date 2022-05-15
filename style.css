@@ -147,7 +147,8 @@ width: 1000px;
 
   #file{
       width: 90px;
-      height: 50px;
+      height: 25px;
+      margin-top: 20px;
   }
 
   .coinContainer{
