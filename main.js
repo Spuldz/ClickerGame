@@ -62,11 +62,13 @@ class StoreItem{
         coinContainer.classList.add('coinContainer');
         priceContainer.classList.add('priceContainer');
         priceCountContainer.classList.add('priceCountContainer');
+        useButton.classList.add('useButton');
         
 
         //giving the container a background image and a price
         backgroundImageContainer.style.backgroundImage = 'URL('+this.backgroundImage+')';
         priceCountContainer.textContent = this.price;
+        useButton.textContent = "Use";
         
         
         
@@ -190,8 +192,6 @@ class StoreItem{
     }
     //a method that changes or doesnt change the background image of the clickable object
     ChangeObject(useButton){
-        useButton.classList.add('buyButton');
-        useButton.textContent = "Use";
 
         if(this.type === "Dcoins"){
             useButton.addEventListener('click', ()=>{
@@ -201,7 +201,7 @@ class StoreItem{
         if(this.type === "cosm"){
             useButton.addEventListener('click', ()=>{
                 document.getElementById('object').style.backgroundImage = 'URL('+this.backgroundImage+')';
-                document.querySelectorAll('.buyButton').forEach(btn =>{
+                document.querySelectorAll('.useButton').forEach(btn =>{
                     btn.textContent = "Use";
                 });
                 changeText(event);
@@ -286,26 +286,29 @@ function UpdateCoins(){
   function changeText(event) {
     event.target.textContent = "Using"
   }
+  UpdateCoins();
 
     //Making the store items and giving them the needed information
     let item1 = new StoreItem("Assets/cookie.png", 0, productLine1, buyButtonCont1, "cosm");
     let item2 = new StoreItem("Assets/drums.png", 30, productLine1, buyButtonCont2, "cosm");
     let item3 = new StoreItem("Assets/coin.png", 20, productLine1, buyButtonCont3, "cosm");
-    let item4 = new StoreItem("Assets/coinX2.png", 20, productLine1, buyButtonCont4, "Dcoins");
-    let item5 = new StoreItem("Assets/basketball.png", 20, productLine1, buyButtonCont5, "cosm");
-    let item6 = new StoreItem("Assets/earth.png", 20, productLine1, buyButtonCont6, "cosm");
-    let item7 = new StoreItem("Assets/helicopter.png", 20, productLine1, buyButtonCont7, "cosm");
-    let item8 = new StoreItem("Assets/duck.png", 40, productLine1, buyButtonCont8, "cosm");
-    let item9 = new StoreItem("Assets/tree.png", 30, productLine1, buyButtonCont9, "cosm");
+    let item5 = new StoreItem("Assets/basketball.png", 20, productLine1, buyButtonCont4, "cosm");
+    let item6 = new StoreItem("Assets/earth.png", 20, productLine1, buyButtonCont5, "cosm");
+    let item7 = new StoreItem("Assets/helicopter.png", 20, productLine1, buyButtonCont6, "cosm");
+    let item8 = new StoreItem("Assets/duck.png", 40, productLine1, buyButtonCont7, "cosm");
+    let item9 = new StoreItem("Assets/tree.png", 30, productLine1, buyButtonCont8, "cosm");
+
+    let item10 = new StoreItem("Assets/coinX2.png", 90, productLine2, buyButtonCont10, "Dcoins")
+
     let customItem = new StoreItem("Assets/custom.png", 100, productLine3, buyButtonCont19, "custom");
     //Rendering the items onto the screen
     item1.Render();
     item2.Render();
     item3.Render();
-    item4.Render();
     item5.Render();
     item6.Render();
     item7.Render();
     item8.Render();
     item9.Render();
+    item10.Render();
     customItem.Render();
