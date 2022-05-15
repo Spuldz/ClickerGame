@@ -1,6 +1,6 @@
 let StoreOpen = false;
 let StorePopup = document.getElementById('popup');
-let coins = 999;
+let coins = 0;
 let productLine1 =  document.getElementById('productLine1');
 let productLine2 =  document.getElementById('productLine2');
 let productLine3 =  document.getElementById('productLine3');
